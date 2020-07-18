@@ -1,14 +1,14 @@
+from delivery.ext.db.commands import create_db, drop_db, populate_db
 import click
 from delivery.ext.db import db
-from delivery.ext.site import models
+from delivery.ext.db import models
 
 
 def init_app(app):
 
-    @app.cli.command()
-    def create_db():
-        """Este comando inicializa o db"""
-        db.create_all()
+    app.cli.add_command(app.cli.command()(create_db))
+    app.cli.add_command(app.cli.command()(drop_db))
+    app.cli.add_command(app.cli.command()(populate_db))
 
     @app.cli.command()
     @click.option("--email", "-e")
